@@ -72,29 +72,29 @@ function dateToString(d) {
 }
 
 function isISO8601String(dateString) {
-	var dateregex = /^([+-])?([0-9]{4})-?([0-9]{1,2})(-?([0-9]{1,2}))([T\s]([0-9]{1,2}):?([0-9]{1,2})(:?([0-9]{1,2})(\.?([0-9]+))?)?(Z|([+-])([0-9]{1,2})(:?([0-9]{1,2}))?)?)?$/;
+	var dateregex = /^([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})([T\s]([0-9]{1,2}):([0-9]{1,2})(:([0-9]{1,2})(\.([0-9]+))?)?(Z|([+-])([0-9]{1,2})(:([0-9]{1,2}))?)?)?$/;
 	return dateregex.test(dateString);
 }
 
 function parseISO8601String(dateString) {
-        var dateregex = /^([+-])?([0-9]{4})-?([0-9]{1,2})(-?([0-9]{1,2}))([T\s]([0-9]{1,2}):?([0-9]{1,2})(:?([0-9]{1,2})(\.?([0-9]+))?)?(Z|([+-])([0-9]{1,2})(:?([0-9]{1,2}))?)?)?$/;
+        var dateregex = /^([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})([T\s]([0-9]{1,2}):([0-9]{1,2})(:([0-9]{1,2})(\.([0-9]+))?)?(Z|([+-])([0-9]{1,2})(:([0-9]{1,2}))?)?)?$/;
         var r = dateregex.exec(dateString);
         var resultDate = null;
-        if (r) {
-                if(!r[6]) //time
-                        resultDate = new Date(parseInt(r[2], 10), parseInt(r[3], 10)-1, (parseInt(r[5], 10) || 1));
+	if (r) {
+                if(!r[4]) //time
+                        resultDate = new Date(parseInt(r[1], 10), parseInt(r[2], 10)-1, (parseInt(r[3], 10) || 1));
                 else {
-                        resultDate = new Date(Date.UTC(
-                                parseInt(r[2], 10), //year
-                                parseInt(r[3], 10)-1, //month
-                                parseInt(r[5], 10), //date
-                                parseInt(r[7], 10), //hours
-                                parseInt(r[8], 10), //minutes
-                                parseInt(r[10], 10) || 0, //seconds
-                                (parseFloat('.' + r[12]) * 1000) || 0)); //milliseconds
-                        if(r[13] != 'Z') { //timezone
-                                var offset = parseInt(r[15], 10) * 60 + (parseInt(r[17], 10) || 0);
-                                offset *= (r[14] == '+' ? -1 : 1);
+			resultDate = new Date(Date.UTC(
+                                parseInt(r[1], 10), //year
+                                parseInt(r[2], 10)-1, //month
+                                parseInt(r[3], 10), //date
+                                parseInt(r[5], 10), //hours
+                                parseInt(r[6], 10), //minutes
+                                parseInt(r[8], 10), //seconds
+                                (parseFloat('0' + r[9], 10) * 1000) || 0)); //milliseconds
+                        if(r[11] != 'Z') { //timezone
+                                var offset = (parseInt(r[13], 10) * 60) + parseInt(r[15], 10);
+                                offset *= (r[12] === '+' ? -1 : 1);
                                 resultDate.setUTCMinutes(resultDate.getUTCMinutes() + offset);
                         }
                 }
