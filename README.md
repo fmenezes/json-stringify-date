@@ -23,7 +23,7 @@ Output:
 ```javascript
 var stringifyDate = require('json-stringify-date');
 var text = '{"d": "2014-03-04T00:00:00.000-03:00"}';
-console.log(stringifyDate.parse(obj));
+console.log(stringifyDate.parse(text));
 ```
 
 Output:
