@@ -5,9 +5,11 @@ stringifyDate.setOptions({utc: true});
 var obj = {
     d: new Date(Date.UTC(2014, 1, 1, 9, 15, 32, 123))
 };
+obj.a = obj;
 
 var testObj = {
-    d: "2014-02-01T09:15:32.123Z"
+    d: "2014-02-01T09:15:32.123Z",
+    a: "[Circular ~]"
 };
 
 try {

@@ -1,5 +1,10 @@
 /*jslint node: true, vars: true, sloppy: true */
-var options = {};
+var jsonStringifySafe = require('json-stringify-safe');
+
+var options = {
+    utc: false,
+    handleCircular: true
+};
 
 function fillZeros(v, n) {
     v = String(v);
@@ -100,13 +105,24 @@ function fnReplacer(replacer) {
 
 module.exports = {
     stringify: function (value, replacer, space) {
-        return JSON.stringify(value, fnReplacer(replacer), space);
+        var strFn;
+        if (options.handleCircular) {
+            strFn = jsonStringifySafe;
+        } else {
+            strFn = JSON.stringify;
+        }
+        return strFn(value, fnReplacer(replacer), space);
     },
     parse: function (text, reviver) {
         return JSON.parse(text, fnReviver(reviver));
     },
     setOptions: function (opt) {
-        options = opt;
+        var key;
+        for (key in opt) {
+            if (opt.hasOwnProperty(key)) {
+                options[key] = opt[key];
+            }
+        }
     },
     getReviver: fnReviver,
     getReplacer: fnReplacer
