@@ -1,6 +1,6 @@
 {
   "name": "json-stringify-date",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Like JSON.stringify, but preserve date-timezones and parse dates",
   "main": "index.js",
   "dependencies": {},
@@ -12,7 +12,8 @@
   "keywords": [
     "json",
     "stringify",
-    "date"
+    "date",
+    "parse"
   ],
   "author": "Filipe Constantinov Menezes <fcmenezes87@gmail.com>",
   "license": "BSD"

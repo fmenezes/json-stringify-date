@@ -1,6 +1,6 @@
 # json-stringify-date
 
-Like JSON.stringify, but preserve date-timezones and parse dates
+Like JSON.stringify, but preserve timezones in date objects and parse dates into ```Date``` object.
 
 ## Usage
 
@@ -36,6 +36,18 @@ stringifyDate.parse(text [, reviver])
 ```
 
 Returns the object containing dates.
+
+```
+stringifyDate.getReviver([reviver])
+```
+
+Gets the function passed to ```JSON.parser```, has the ability to pass an inner function through optional parameter ```reviver```.
+
+```
+stringifyDate.getReplacer([replacer])
+```
+
+Gets the function passed to ```JSON.stringify```, has the ability to pass an inner function through optional parameter ```replacer```.
 
 ## Legal
 
