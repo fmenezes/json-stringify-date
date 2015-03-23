@@ -6,9 +6,12 @@
   "dependencies": {
     "json-stringify-safe": "~5.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "^2.2.1",
+    "should": "^5.2.0"
+  },
   "scripts": {
-    "test": "node test.js"
+    "test": "mocha"
   },
   "repository": "git://github.com/fmenezes/json-stringify-date",
   "keywords": [
