@@ -2,6 +2,10 @@
 
 Like JSON.stringify, but preserve timezones in date objects and parse dates into ```Date``` object.
 
+## Install
+
+`npm install json-stringify-date`
+
 ## Usage
 
 Takes the same arguments as `JSON.stringify` and `JSON.parse`.
