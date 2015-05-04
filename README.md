@@ -23,6 +23,26 @@ Output:
 { d: Tue Mar 04 2014 00:00:00 GMT-0300 (BRT) }
 ```
 
+## With ExpressJS
+
+To use it with ExpressJS, follow an example.  
+The magic really happens in passing `getReviver([reviver])` to `body-parser` 'reviver option', it makes the json parser to serialize date strings into date objects.  
+Also, optionally you can pass `getReplacer([replacer])` to `body-parser` 'json replacer setting', it makes the resulting json to preserve timezones.
+
+```javascript
+var express = require('express');
+var bodyParser = require('body-parser');
+var jsonStringifyDate = require('./index');
+var app = express();
+app.use(bodyParser.json({reviver: jsonStringifyDate.getReviver()}));
+app.set('json replacer', jsonStringifyDate.getReplacer());
+app.post('/test', function (req, res) {
+  // do something
+  res.json({date: new Date()});
+});
+app.listen(3000);
+```
+
 ## Details
 
 ```
