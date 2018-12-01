@@ -8,8 +8,7 @@ var options = {
 };
 
 function isISO8601String(dateString) {
-    var dateregex = /^([0-9]{4})\-([0-9]{1,2})\-([0-9]{1,2})([T\s]([0-9]{1,2}):([0-9]{1,2})(:([0-9]{1,2})(\.([0-9]+))?)?(Z|([+\-])([0-9]{1,2})(:([0-9]{1,2}))?)?)?$/;
-    return dateregex.test(dateString);
+    return moment(dateString).isValid();
 }
 
 function fnReviver(reviver) {
