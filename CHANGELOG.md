@@ -2,6 +2,7 @@
 
 ## Next Release
 - Replaced regex validation with `moment#isValid` 
+- Updated License to MIT
 
 ## 0.1.4, 2015-03-23
 - Added dependency `Moment.JS` to parse and format dates
