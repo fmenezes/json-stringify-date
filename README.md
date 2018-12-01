@@ -75,6 +75,4 @@ Gets the function passed to ```JSON.stringify```, has the ability to pass an inn
 
 ## Legal
 
-Copyright (c) 2014 by Filipe Constantinov Menezes
-
-BSD License
+See [LICENSE](LICENSE)
