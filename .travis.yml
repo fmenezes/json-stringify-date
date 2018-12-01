@@ -1,9 +1,17 @@
 language: node_js
 branches:
-  only: 
-    - master
+  only:
+  - master
 node_js:
-  - "4"
-  - "6"
-  - "8"
-  - "10"
+- '4'
+- '6'
+- '8'
+- '10'
+deploy:
+  provider: npm
+  email: fcmenezes87@gmail.com
+  api_key:
+    secure: B/DWcBuPQnv70GpXs927CHy9D/NyGOfHR/t+8WD85gNMzoa4VvZY5i1ta0ScR8PtNG75k6K7Z1c/ReYJ3rMrtVMA4z6QtD5p4Nv4mzySca6YjJNfNTgHbciQlpsIq2YGizqVFPjWrSbM28rkaWZdQt5jXSXLRpbz/G92s6FjqwYQUwWTo0/idd2ELEc7/6kOuFG68FCA3ilXBrTP1+/1GYfsIsQC30ny4Qe9EIeuhVrl5t4zRckiNIiA4yiqIXVbMdvrl9A7uHNiYIUIO7YjMOw7afcHrlY07RQYKSUVY+wiJDyh/N9Ur8BVuH/To5p283vffhlHIJTiUlzv80vXCh2bQFW+2fQHFnRdOPSFEToElEtd9opGdXMHVRE6WNAQx8ImqoyDHWYpKMKXD8weT5r6XxhZETBmChb80SvYv+E/Vu/t2HUEX4FAYdFP/nOU6xndhe6CgnLdoJLU0gCU606ll+uOmjrudm1GES7pSKFj6C5C3aDXIV/V/RG2luWzyNvFunu804pJfSkwvYB8JHmFNGU0struv3dEdQwn+Z15J5wFDtMms15lbnW+Sj97KfVmgmSijXlec9RiGfj3taFXWtG7tOlisAGbc13oNfN8YpzdmEjIX7GrzSed+9g2LoJHkK94LWh1Y3HeNbTOr+NAzLk06rBz6pbWAOWTJRk=
+  on:
+    tags: true
+    repo: fmenezes/json-stringify-date
