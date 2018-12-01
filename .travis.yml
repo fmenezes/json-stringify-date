@@ -7,6 +7,11 @@ node_js:
 - '6'
 - '8'
 - '10'
+jobs:
+  include:
+    - stage: Linter
+      node_js: 10
+      script: npm run lint
 deploy:
   provider: npm
   email: fcmenezes87@gmail.com
