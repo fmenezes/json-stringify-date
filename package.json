@@ -1,6 +1,6 @@
 {
   "name": "json-stringify-date",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Like JSON.stringify, but preserve timezones in date objects and parse dates into Date object",
   "main": "index.js",
   "dependencies": {
