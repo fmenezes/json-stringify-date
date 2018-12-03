@@ -1,6 +1,6 @@
 # ChangeLog
 
-## Next Release
+## 0.1.7, 2018-12-03
 - Added a default value for `getReplacer` function
 
 ## 0.1.6, 2018-12-03
