@@ -14,6 +14,8 @@
     "should": "^5.2.0"
   },
   "scripts": {
+    "version": "sed -i '' -e \"s/## Next Release/## $(echo $npm_package_version), $(date +%Y-%m-%d)/\" CHANGELOG.md && git add CHANGELOG.md",
+    "postversion": "git push && git push --tag",
     "test:coverage": "nyc npm test",
     "test": "mocha",
     "lint": "jslint *.js **/*.js"
