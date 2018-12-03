@@ -2,7 +2,7 @@ language: node_js
 branches:
   only:
   - master
-  - /v\d+\.\d+\.\d+/
+  - /\d+\.\d+\.\d+/
 node_js:
 - '4'
 - '6'

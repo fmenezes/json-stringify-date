@@ -1,6 +1,6 @@
 # ChangeLog
 
-## Next Release
+## 0.1.6, 2018-12-03
 - Fixed bug after removing regex validation
 
 ## 0.1.5, 2018-12-01
