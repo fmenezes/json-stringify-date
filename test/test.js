@@ -1,4 +1,4 @@
-/*jslint node: true, vars: true, sloppy: true */
+/*jslint node: true, vars: true, unparam: true, sloppy: true */
 /*global describe, it, before */
 var should = require('should');
 var stringifyDate = require('../index');

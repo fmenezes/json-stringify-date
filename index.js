@@ -1,4 +1,4 @@
-/*jslint node: true, vars: true, sloppy: true */
+/*jslint node: true, vars: true, unparam: true, sloppy: true */
 var jsonStringifySafe = require('json-stringify-safe');
 var moment = require('moment');
 
