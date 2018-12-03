@@ -13,6 +13,9 @@ jobs:
     - stage: Linter
       node_js: 10
       script: npm run lint
+    - stage: Coverage
+      node_js: 10
+      script: npm run test:coverage
 deploy:
   skip_cleanup: true
   provider: npm

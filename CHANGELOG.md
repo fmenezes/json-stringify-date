@@ -1,5 +1,8 @@
 # ChangeLog
 
+## Next Release
+- Added a default value for `getReplacer` function
+
 ## 0.1.6, 2018-12-03
 - Fixed bug after removing regex validation
 

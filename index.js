@@ -1,4 +1,4 @@
-/*jslint node: true, vars: true, sloppy: true */
+/*jslint node: true, vars: true, unparam: true, sloppy: true */
 var jsonStringifySafe = require('json-stringify-safe');
 var moment = require('moment');
 
@@ -24,7 +24,7 @@ function fnReviver(reviver) {
 }
 
 function fnReplacer(replacer) {
-    var fn = replacer;
+    var fn = replacer || function (key, value) { return value; };
     if (!options.utc) {
         fn = function (key, value) {
             if (isISO8601String(value)) {
