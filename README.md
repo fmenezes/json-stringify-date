@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/fmenezes/json-stringify-date.svg?branch=master)](https://travis-ci.com/fmenezes/json-stringify-date)
+
 # json-stringify-date
 
 Like JSON.stringify, but preserve timezones in date objects and parse dates into ```Date``` object.

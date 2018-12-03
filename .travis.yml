@@ -14,6 +14,7 @@ jobs:
       node_js: 10
       script: npm run lint
 deploy:
+  skip_cleanup: true
   provider: npm
   email: fcmenezes87@gmail.com
   api_key:
@@ -21,3 +22,4 @@ deploy:
   on:
     tags: true
     repo: fmenezes/json-stringify-date
+    node: '10'
