@@ -24,7 +24,7 @@ function fnReviver(reviver) {
 }
 
 function fnReplacer(replacer) {
-    var fn = replacer;
+    var fn = replacer || function (key, value) { return value; };
     if (!options.utc) {
         fn = function (key, value) {
             if (isISO8601String(value)) {
