@@ -8,7 +8,7 @@ var options = {
 };
 
 function isISO8601String(dateString) {
-    return moment(dateString).isValid();
+    return (typeof dateString === 'string') && moment(dateString, moment.ISO_8601, true).isValid();
 }
 
 function fnReviver(reviver) {

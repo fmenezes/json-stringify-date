@@ -1,5 +1,8 @@
 # ChangeLog
 
+## Next Release
+- Fixed bug after removing regex validation
+
 ## 0.1.5, 2018-12-01
 - Replaced regex validation with `moment#isValid` 
 - Updated License to MIT
