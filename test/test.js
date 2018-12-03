@@ -5,6 +5,10 @@ var stringifyDate = require('../index');
 
 describe('JSON stringify date', function () {
     describe('UTC', function () {
+        it('should stringify local date correctly', function () {
+            stringifyDate.setOptions({utc: false});
+            stringifyDate.stringify({a: new Date()}).should.match(/^\{\"a\"\:\"\d{4}-\d{2}-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}[\+\-]\d{2}\:\d{2}\"\}$/);
+        });
         it('should return UTC date string', function () {
             stringifyDate.setOptions({utc: true});
             stringifyDate.stringify(new Date()).should.endWith("Z\"");
