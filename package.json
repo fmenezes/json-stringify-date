@@ -15,10 +15,12 @@
   },
   "scripts": {
     "version": "sed -i '' -e \"s/## Next Release/## $(echo $npm_package_version), $(date +%Y-%m-%d)/\" CHANGELOG.md && git add CHANGELOG.md",
+    "preversion": "npm test",
     "postversion": "git push && git push --tag",
-    "test:coverage": "nyc npm test",
-    "test": "mocha",
-    "lint": "jslint *.js **/*.js"
+    "test": "npm run test:spec && npm run test:lint && npm run test:coverage",
+    "test:coverage": "nyc npm run test:spec",
+    "test:spec": "mocha",
+    "test:lint": "jslint *.js **/*.js"
   },
   "repository": "git://github.com/fmenezes/json-stringify-date",
   "keywords": [
