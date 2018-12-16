@@ -3,13 +3,16 @@
   "version": "0.1.7",
   "description": "Like JSON.stringify, but preserve timezones in date objects and parse dates into Date object",
   "main": "index.js",
+  "browser": "browser.js",
   "dependencies": {
     "json-stringify-safe": "~5.0.0",
     "moment": "^2.9.0"
   },
   "devDependencies": {
-    "jslint": "^0.12.0",
+    "browserify": "^16.2.3",
+    "jshint": "^2.9.7",
     "mocha": "^2.2.1",
+    "mocha-chrome": "^1.1.0",
     "nyc": "^13.1.0",
     "should": "^5.2.0"
   },
@@ -17,10 +20,13 @@
     "version": "sed -i '' -e \"s/## Next Release/## $(echo $npm_package_version), $(date +%Y-%m-%d)/\" CHANGELOG.md && git add CHANGELOG.md",
     "preversion": "npm test",
     "postversion": "git push && git push --tag",
-    "test": "npm run test:spec && npm run test:lint && npm run test:coverage",
-    "test:coverage": "nyc npm run test:spec",
-    "test:spec": "mocha",
-    "test:lint": "jslint *.js **/*.js"
+    "test": "npm run test:lint && npm run test:coverage && npm run test:build && npm run test:node && npm run test:browser",
+    "test:coverage": "nyc npm run test:node",
+    "test:node": "mocha",
+    "test:browser": "mocha-chrome test/index.html",
+    "test:lint": "jshint *.js **/*.js",
+    "test:build": "./script/check.sh",
+    "build": "browserify --no-browser-field -e index.js -s JSONStringifyDate -o browser.js"
   },
   "repository": "git://github.com/fmenezes/json-stringify-date",
   "keywords": [

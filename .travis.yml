@@ -1,4 +1,6 @@
 language: node_js
+addons:
+  chrome: stable
 branches:
   only:
   - master
@@ -8,15 +10,27 @@ node_js:
 - '6'
 - '8'
 - '10'
-script: npm run test:spec
+stages:
+  - lint
+  - coverage
+  - build
+  - browser
+  - test
+script: npm run test:node
 jobs:
   include:
-    - stage: Lint
+    - stage: lint
       node_js: 10
       script: npm run test:lint
-    - stage: Coverage
+    - stage: browser
+      node_js: 10
+      script: npm run test:browser
+    - stage: coverage
       node_js: 10
       script: npm run test:coverage
+    - stage: build
+      node_js: 10
+      script: npm run test:build
 deploy:
   skip_cleanup: true
   provider: npm
