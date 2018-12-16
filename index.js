@@ -1,5 +1,4 @@
 /*jslint node: true, vars: true, unparam: true, sloppy: true */
-var jsonStringifySafe = require('json-stringify-safe');
 var moment = require('moment');
 
 var options = {
@@ -42,12 +41,7 @@ function fnReplacer(replacer) {
 
 module.exports = {
     stringify: function (value, replacer, space) {
-        var strFn;
-        if (options.handleCircular) {
-            strFn = jsonStringifySafe;
-        } else {
-            strFn = JSON.stringify;
-        }
+        var strFn = JSON.stringify;
         return strFn(value, fnReplacer(replacer), space);
     },
     parse: function (text, reviver) {

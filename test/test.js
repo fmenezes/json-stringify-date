@@ -27,30 +27,6 @@ describe('JSON stringify date', function () {
                 stringifyDate.stringify(new Date()).should.endWith("Z\"");
             });
         });
-        describe('handleCircular option false', function () {
-            before(function () {
-                stringifyDate.setOptions({handleCircular: false});
-            });
-            it('should not handle circular references', function () {
-                should.throws(function () {
-                    var obj = {a: new Date()};
-                    obj.b = obj;
-                    stringifyDate.stringify(obj).should.not.throw();
-                });
-            });
-        });
-        describe('handleCircular option true', function () {
-            before(function () {
-                stringifyDate.setOptions({handleCircular: true});
-            });
-            it('should handle circular references', function () {
-                should.doesNotThrow(function () {
-                    var obj = {a: new Date()};
-                    obj.b = obj;
-                    stringifyDate.stringify(obj).should.not.throw();
-                });
-            });
-        });
     });
     describe('#parse', function () {
         it('should parse UTC date string', function () {

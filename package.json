@@ -4,12 +4,11 @@
   "description": "Like JSON.stringify, but preserve timezones in date objects and parse dates into Date object",
   "main": "index.js",
   "dependencies": {
-    "json-stringify-safe": "~5.0.0",
     "moment": "^2.9.0"
   },
   "devDependencies": {
     "jslint": "^0.12.0",
-    "mocha": "^2.2.1",
+    "mocha": "^5.0.0",
     "nyc": "^13.1.0",
     "should": "^5.2.0"
   },

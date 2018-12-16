@@ -1,5 +1,8 @@
 # ChangeLog
 
+## Next Release
+- Removed dependency `json-stringify-safe`
+
 ## 0.1.7, 2018-12-03
 - Added a default value for `getReplacer` function
 
