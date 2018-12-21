@@ -1,6 +1,6 @@
 # ChangeLog
 
-## Next Release
+## 0.1.8, 2018-12-21
 - Added Support for Browser
 
 ## 0.1.7, 2018-12-03
