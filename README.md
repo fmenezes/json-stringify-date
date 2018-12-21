@@ -2,8 +2,6 @@
 [![NpmLicense](https://img.shields.io/npm/l/json-stringify-date.svg)](http://npmjs.com/package/json-stringify-date) 
 [![npm](https://img.shields.io/npm/dm/json-stringify-date.svg)](http://npmjs.com/package/json-stringify-date)
 
-
-
 # json-stringify-date
 
 Like JSON.stringify, but preserve timezones in date objects and parse dates into ```Date``` object.
@@ -120,6 +118,22 @@ app.post('/test', function (req, res) {
   res.json({date: new Date()});
 });
 app.listen(3000);
+```
+
+## Using with Browser
+
+Add tag `<script type="text/javascript" src="https://raw.githubusercontent.com/fmenezes/json-stringify-date/master/browser.js"></script>`, you can also use webpack or any other packaging system.
+
+Than you will have the object `JSONStringifyDate` in the global context (`window`) so you can run things like
+
+```javascript
+JSONStringifyDate.parse('{"d": "2014-03-04T00:00:00.000-03:00"}');
+```
+
+Output:
+
+```
+{ d: Tue Mar 04 2014 00:00:00 GMT-0300 (BRT) }
 ```
 
 ## Legal
