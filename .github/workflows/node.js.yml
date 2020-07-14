@@ -5,9 +5,13 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ master ]
+    branches:
+    - master
+    tags:
+      - '*'
   pull_request:
-    branches: [ master ]
+    branches:
+    - master
 
 jobs:
   lint:
@@ -50,3 +54,15 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm run test:node
+  deploy:
+    if: ${{ github.ref == "ref/head/[0-9].[0-9].[0-9]" }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+    - run: npm ci
+    - name: NPM Publish
+      uses: JS-DevTools/npm-publish@v1
+  
