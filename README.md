@@ -82,25 +82,6 @@ Output:
 {"d": "2014-03-04T00:00:00.000-03:00"}
 ```
 
-#### handleCircular
-_type_: boolean _default_: true  
-Does not error when object contains circular references  
-```javascript
-var stringifyDate = require('json-stringify-date');
-var obj = {a: new Date(2014, 2, 4)};
-obj['b'] = obj;
-stringifyDate.setOptions({handleCircular: true}); //this is the default
-console.log(stringifyDate.stringify(obj));
-stringifyDate.setOptions({handleCircular: false});
-console.log(stringifyDate.stringify(obj));
-```
-Output:
-
-```
-{"a":"2014-03-04T00:00:00.000+00:00","b":"[Circular ~]"}
-TypeError: Converting circular structure to JSON
-```
-
 ## Using with [ExpressJS](http://expressjs.com/)
 
 To use it with [ExpressJS](http://expressjs.com/), follow this example.  

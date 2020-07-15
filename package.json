@@ -5,7 +5,6 @@
   "main": "index.js",
   "browser": "browser.js",
   "dependencies": {
-    "json-stringify-safe": "~5.0.0",
     "moment": "^2.27.0"
   },
   "devDependencies": {

@@ -1,10 +1,8 @@
 var moment = require('moment');
-var jsonStringifySafe = require('json-stringify-safe');
 
 module.exports = (function () {
     var options = {
-        utc: false,
-        handleCircular: true
+        utc: false
     };
 
     function isISO8601String(dateString) {
@@ -42,13 +40,7 @@ module.exports = (function () {
 
     return {
         stringify: function (value, replacer, space) {
-            var strFn;
-            if (options.handleCircular) {
-                strFn = jsonStringifySafe;
-            } else {
-                strFn = JSON.stringify;
-            }
-            return strFn(value, fnReplacer(replacer), space);
+            return JSON.stringify(value, fnReplacer(replacer), space);
         },
         parse: function (text, reviver) {
             return JSON.parse(text, fnReviver(reviver));
