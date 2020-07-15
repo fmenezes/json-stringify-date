@@ -55,7 +55,7 @@ jobs:
     - run: npm ci
     - run: npm run test:node
   deploy:
-    if: github.ref == 'ref/tags/*'
+    if: github.ref == 'refs/tags/*'
     runs-on: ubuntu-latest
     needs: [build, coverage, browser, lint]
     steps:
