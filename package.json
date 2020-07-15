@@ -17,9 +17,8 @@
     "should": "^5.2.0"
   },
   "scripts": {
-    "version": "npm run changelog && git add CHANGELOG.md",
     "preversion": "npm test",
-    "postversion": "git push && git push --tag",
+    "postversion": "npm run changelog && git add . && git commit -m \"Version $(./script/package-version.js)\" && git tag $(./script/package-version.js) && git push && git push --tags",
     "test": "npm run test:lint && npm run test:coverage && npm run test:build && npm run test:node && npm run test:browser",
     "test:coverage": "nyc npm run test:node",
     "test:node": "mocha",
