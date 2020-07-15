@@ -1,5 +1,8 @@
 # ChangeLog
 
+## Next Release
+- Added SECURITY.md
+
 ## 0.1.8, 2018-12-21
 - Added Support for Browser
 
