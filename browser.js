@@ -1,11 +1,9 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.JSONStringifyDate = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 var moment = require('moment');
-var jsonStringifySafe = require('json-stringify-safe');
 
 module.exports = (function () {
     var options = {
-        utc: false,
-        handleCircular: true
+        utc: false
     };
 
     function isISO8601String(dateString) {
@@ -43,13 +41,7 @@ module.exports = (function () {
 
     return {
         stringify: function (value, replacer, space) {
-            var strFn;
-            if (options.handleCircular) {
-                strFn = jsonStringifySafe;
-            } else {
-                strFn = JSON.stringify;
-            }
-            return strFn(value, fnReplacer(replacer), space);
+            return JSON.stringify(value, fnReplacer(replacer), space);
         },
         parse: function (text, reviver) {
             return JSON.parse(text, fnReviver(reviver));
@@ -67,36 +59,7 @@ module.exports = (function () {
     };
 }());
 
-},{"json-stringify-safe":2,"moment":3}],2:[function(require,module,exports){
-exports = module.exports = stringify
-exports.getSerialize = serializer
-
-function stringify(obj, replacer, spaces, cycleReplacer) {
-  return JSON.stringify(obj, serializer(replacer, cycleReplacer), spaces)
-}
-
-function serializer(replacer, cycleReplacer) {
-  var stack = [], keys = []
-
-  if (cycleReplacer == null) cycleReplacer = function(key, value) {
-    if (stack[0] === value) return "[Circular ~]"
-    return "[Circular ~." + keys.slice(0, stack.indexOf(value)).join(".") + "]"
-  }
-
-  return function(key, value) {
-    if (stack.length > 0) {
-      var thisPos = stack.indexOf(this)
-      ~thisPos ? stack.splice(thisPos + 1) : stack.push(this)
-      ~thisPos ? keys.splice(thisPos, Infinity, key) : keys.push(key)
-      if (~stack.indexOf(value)) value = cycleReplacer.call(this, key, value)
-    }
-    else stack.push(value)
-
-    return replacer == null ? value : replacer.call(this, key, value)
-  }
-}
-
-},{}],3:[function(require,module,exports){
+},{"moment":2}],2:[function(require,module,exports){
 //! moment.js
 //! version : 2.27.0
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
