@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.com/fmenezes/json-stringify-date.svg?branch=master)](https://travis-ci.com/fmenezes/json-stringify-date) [![npm](https://img.shields.io/npm/v/json-stringify-date.svg)](http://npmjs.com/package/json-stringify-date) 
+![Build Status](https://github.com/fmenezes/json-stringify-date/workflows/Node.js%20CI/badge.svg?event=push)
+[![npm](https://img.shields.io/npm/v/json-stringify-date.svg)](http://npmjs.com/package/json-stringify-date) 
 [![NpmLicense](https://img.shields.io/npm/l/json-stringify-date.svg)](http://npmjs.com/package/json-stringify-date) 
 [![npm](https://img.shields.io/npm/dm/json-stringify-date.svg)](http://npmjs.com/package/json-stringify-date)
 
