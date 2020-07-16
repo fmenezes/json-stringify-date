@@ -18,7 +18,7 @@
   },
   "scripts": {
     "preversion": "npm test",
-    "postversion": "npm run changelog && git add . && git commit -m \"Version $(./script/package-version.js)\" && git tag $(./script/package-version.js) && git push && git push --tag",
+    "postversion": "npm run changelog && npm run retag && npm run push",
     "test": "npm run test:lint && npm run test:coverage && npm run test:build && npm run test:node && npm run test:browser",
     "test:coverage": "nyc npm run test:node",
     "test:node": "mocha",
@@ -26,7 +26,9 @@
     "test:lint": "jshint *.js **/*.js",
     "test:build": "./script/check.sh",
     "changelog": "auto-changelog --ignore-commit-pattern FUNDING",
-    "build": "browserify --no-browser-field -e index.js -s JSONStringifyDate -o browser.js"
+    "build": "browserify --no-browser-field -e index.js -s JSONStringifyDate -o browser.js",
+    "retag": "export GIT_TAG=$(git describe --tags) && git commit -a --amend --no-edit && git tag -f $GIT_TAG",
+    "push": "git push && git push --tag"
   },
   "repository": "git://github.com/fmenezes/json-stringify-date",
   "keywords": [
