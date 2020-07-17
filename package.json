@@ -12,7 +12,7 @@
     "browserify": "^16.5.1",
     "jshint": "^2.11.1",
     "mocha": "^2.2.1",
-    "mocha-chrome": "^1.1.0",
+    "mocha-chrome": "^2.2.0",
     "nyc": "^13.3.0",
     "should": "^13.2.3"
   },
