@@ -11,7 +11,7 @@
     "auto-changelog": "^2.2.0",
     "browserify": "^16.5.1",
     "jshint": "^2.11.1",
-    "mocha": "^2.2.1",
+    "mocha": "^8.0.1",
     "mocha-chrome": "^2.2.0",
     "nyc": "^15.1.0",
     "should": "^13.2.3"
