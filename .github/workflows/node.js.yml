@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
+    - uses: actions/setup-node@v2.1.0
       with:
         node-version: 14.x
     - run: npm ci
@@ -28,7 +28,7 @@ jobs:
     timeout-minutes: 10
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
+    - uses: actions/setup-node@v2.1.0
       with:
         node-version: 14.x
     - run: npm ci
@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
+    - uses: actions/setup-node@v2.1.0
       with:
         node-version: 14.x
     - run: npm ci
@@ -50,7 +50,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v2.1.0
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
@@ -61,7 +61,7 @@ jobs:
     needs: [build, coverage, browser, lint]
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
+    - uses: actions/setup-node@v2.1.0
       with:
         node-version: 14.x
     - run: npm ci
