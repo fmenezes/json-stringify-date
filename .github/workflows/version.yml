@@ -28,3 +28,17 @@ jobs:
         node-version: 14.x
     - run: npm ci
     - run: npm version $VERSION
+    - name: NPM Publish
+      uses: JS-DevTools/npm-publish@v1
+      with:
+        token: ${{ secrets.NPM_TOKEN }}
+    - run: echo "${{github.ref}}" | sed 's/refs\/tags\///' | xargs -I $ echo "TAG=$" >> $GITHUB_ENV"
+    - name: Create Github Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Version ${{ env.TAG }}
+        body: Version ${{ env.TAG }}
+    
