@@ -5,13 +5,13 @@ module.exports = (function () {
         utc: false
     };
 
-    function isISO8601String(dateString) {
-        return (typeof dateString === 'string') && moment(dateString, moment.ISO_8601, true).isValid();
+    function isDateString(dateString) {
+        return (typeof dateString === 'string') && moment(dateString, moment.ISO_8601, true).isValid() && dateString.length >= 6;
     }
 
     function fnReviver(reviver) {
         return function (key, value) {
-            if (isISO8601String(value)) {
+            if (isDateString(value)) {
                 value = moment(value).toDate();
             }
             if (reviver) {
@@ -25,7 +25,7 @@ module.exports = (function () {
         var fn = replacer || function (key, value) { return value; };
         if (!options.utc) {
             fn = function (key, value) {
-                if (isISO8601String(value)) {
+                if (isDateString(value)) {
                     value = moment(value).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
                 }
                 if (replacer) {
