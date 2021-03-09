@@ -25,7 +25,7 @@ module.exports = (function () {
         var fn = replacer || function (key, value) { return value; };
         if (!options.utc) {
             fn = function (key, value) {
-                if (isISO8601String(value)) {
+                if (isDateString(value)) {
                     value = moment(value).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
                 }
                 if (replacer) {
