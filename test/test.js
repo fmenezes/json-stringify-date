@@ -43,6 +43,11 @@ describe('JSON stringify date', function () {
             res.should.have.property('d');
             res.d.should.be.instanceof(Date);
         });
+        it('should not parse a 4 digit string', function () {
+            var res = JSONStringifyDate.parse('{"d":"10101"}');
+            res.should.have.property('d');
+            res.d.should.be.instanceof(String);
+        });
     });
     describe('#getReviver', function () {
         describe('without customization', function () {
