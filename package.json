@@ -27,7 +27,7 @@
     "test:build": "./script/check.sh",
     "changelog": "auto-changelog --ignore-commit-pattern FUNDING",
     "build": "browserify --no-browser-field -e index.js -s JSONStringifyDate -o browser.js",
-    "retag": "export GIT_TAG=$(git describe --tags) && git commit -a --amend --no-edit && git tag -f $GIT_TAG",
+    "retag": "export GIT_TAG=$(git describe --tags) && npm run build && git commit -a --amend --no-edit && git tag -f $GIT_TAG",
     "push": "git push && git push --tag"
   },
   "repository": "git://github.com/fmenezes/json-stringify-date",
