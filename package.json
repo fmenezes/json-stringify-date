@@ -18,7 +18,7 @@
   },
   "scripts": {
     "preversion": "npm run test:release",
-    "postversion": "npm run changelog && npm run retag && npm run push",
+    "postversion": "npm run changelog && npm run build && npm run retag && npm run push",
     "test": "npm run test:release && npm run test:build && npm run test:browser",
     "test:release": "npm run test:lint && npm run test:coverage && npm run test:node",
     "test:coverage": "nyc npm run test:node",
@@ -28,7 +28,7 @@
     "test:build": "./script/check.sh",
     "changelog": "auto-changelog --ignore-commit-pattern FUNDING",
     "build": "browserify --no-browser-field -e index.js -s JSONStringifyDate -o browser.js",
-    "retag": "export GIT_TAG=$(git describe --tags) && npm run build && git commit -a --amend --no-edit && git tag -f $GIT_TAG",
+    "retag": "export GIT_TAG=$(npm run env | grep npm_package_version | cut -d '=' -f 2) && git commit -a --amend --no-edit && git tag -f $GIT_TAG",
     "push": "git push && git push --tag"
   },
   "repository": "git://github.com/fmenezes/json-stringify-date",
