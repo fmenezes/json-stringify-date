@@ -23,6 +23,8 @@ jobs:
         git config --global user.name "${{ secrets.GIT_USER_NAME }}"
         git config --global user.email "${{ secrets.GIT_USER_EMAIL }}"
     - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - uses: actions/setup-node@v2.2.0
       with:
         node-version: 14.x
@@ -38,7 +40,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.ref }}
+        tag_name: refs/tags/${{ env.TAG }}
         release_name: Version ${{ env.TAG }}
         body: Version ${{ env.TAG }}
     
