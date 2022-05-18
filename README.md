@@ -96,12 +96,12 @@ Output:
 ```
 
 #### fnCheck
-_type_: function (string)
+_type_: function (string, string)
 _returns_: boolean
 Function to check whenever a string is a valid date
 ```javascript
 var stringifyDate = require('json-stringify-date');
-stringifyDate.setOptions({ fnCheck: function (value) {
+stringifyDate.setOptions({ fnCheck: function (key, value) {
   return /\d{8}/.test(value);
 } });
 console.log(stringifyDate.parse({d: '2020-01-01'}));

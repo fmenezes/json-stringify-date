@@ -131,7 +131,7 @@ describe('JSON stringify date', function () {
         describe('fnCheck option', function () {
             var fnCheck = JSONStringifyDate.getOptions().fnCheck;
             beforeEach(function () {
-                JSONStringifyDate.setOptions({fnCheck: function(value) {
+                JSONStringifyDate.setOptions({fnCheck: function(key, value) {
                     return /\d{8}/.test(value);
                 }});
             });
