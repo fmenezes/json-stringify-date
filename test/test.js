@@ -139,12 +139,10 @@ describe('JSON stringify date', function () {
                 JSONStringifyDate.setOptions({fnCheck: fnCheck});
             });
             it('should not parse dates on different format', function () {
-                console.log(JSONStringifyDate.parse('{"d": "2020-01-01"}'));
                 JSONStringifyDate.parse('{"d": "2020-01-01"}').d.should.be.instanceof(String);
             });
 
             it('should parse dates on specified format', function () {
-                console.log(JSONStringifyDate.parse('{"d": "20200101"}'));
                 JSONStringifyDate.parse('{"d": "20200101"}').d.should.be.instanceof(Date);
             });
         });
