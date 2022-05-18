@@ -1,5 +1,5 @@
 /*jshint node: true */
-/*global describe, it, before, after */
+/*global describe, it, before, beforeEach, afterEach */
 'use strict';
 
 if (typeof module !== 'undefined' && module.exports) {
