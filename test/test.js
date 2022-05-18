@@ -1,5 +1,5 @@
 /*jshint node: true */
-/*global describe, it, before */
+/*global describe, it, before, after */
 'use strict';
 
 if (typeof module !== 'undefined' && module.exports) {
@@ -126,6 +126,26 @@ describe('JSON stringify date', function () {
                     });
                     replacer('a', new Date()).should.match(/custom \d+$/);
                 });
+            });
+        });
+        describe('fnCheck option', function () {
+            var fnCheck = JSONStringifyDate.getOptions().fnCheck;
+            before(function () {
+                JSONStringifyDate.setOptions({fnCheck: function(value) {
+                    return /\d{8}/.test(value);
+                }});
+            });
+            after(function () {
+                JSONStringifyDate.setOptions({fnCheck: fnCheck});
+            });
+            it('should not parse dates on different format', function () {
+                console.log(JSONStringifyDate.parse('{"d": "2020-01-01"}'));
+                JSONStringifyDate.parse('{"d": "2020-01-01"}').d.should.be.instanceof(String);
+            });
+
+            it('should parse dates on specified format', function () {
+                console.log(JSONStringifyDate.parse('{"d": "20200101"}'));
+                JSONStringifyDate.parse('{"d": "20200101"}').d.should.be.instanceof(Date);
             });
         });
     });
