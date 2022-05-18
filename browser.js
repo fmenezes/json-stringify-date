@@ -4,14 +4,14 @@ var moment = require('moment');
 module.exports = (function () {
     var options = {
         utc: false,
-        fnValid: function (dateString) {
+        fnCheck: function (dateString) {
             return (typeof dateString === 'string') && moment(dateString, moment.ISO_8601, true).isValid() && dateString.length >= 6;
         },
     };
 
     function fnReviver(reviver) {
         return function (key, value) {
-            if (options.fnValid(value)) {
+            if (options.fnCheck(value)) {
                 value = moment(value).toDate();
             }
             if (reviver) {
@@ -25,7 +25,7 @@ module.exports = (function () {
         var fn = replacer || function (key, value) { return value; };
         if (!options.utc) {
             fn = function (key, value) {
-                if (options.fnValid(value)) {
+                if (options.fnCheck(value)) {
                     value = moment(value).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
                 }
                 if (replacer) {

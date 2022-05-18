@@ -130,12 +130,12 @@ describe('JSON stringify date', function () {
         });
         describe('fnCheck option', function () {
             var fnCheck = JSONStringifyDate.getOptions().fnCheck;
-            before(function () {
+            beforeEach(function () {
                 JSONStringifyDate.setOptions({fnCheck: function(value) {
                     return /\d{8}/.test(value);
                 }});
             });
-            after(function () {
+            afterEach(function () {
                 JSONStringifyDate.setOptions({fnCheck: fnCheck});
             });
             it('should not parse dates on different format', function () {
