@@ -62,7 +62,20 @@ stringifyDate.getReplacer([replacer])
 
 Gets the function passed to ```JSON.stringify```, has the ability to pass an inner function through optional parameter ```replacer```.
 
+### getOptions
+```
+stringifyDate.getOptions()
+```
+
+Gets the options current set.
+
+
 ### setOptions
+```
+stringifyDate.setOptions({...})
+```
+
+Sets the options that will be used.
 
 #### utc
 _type_: boolean _default_: false  
@@ -80,6 +93,29 @@ Output:
 ```
 {"d": "2014-03-04T00:00:00.000Z"}
 {"d": "2014-03-04T00:00:00.000-03:00"}
+```
+
+#### fnCheck
+_type_: function (string, string)
+_returns_: boolean
+Function to check whenever a string is a valid date
+```javascript
+var stringifyDate = require('json-stringify-date');
+fallbackFnCheck = stringifyDate.getOptions().fnCheck;
+stringifyDate.setOptions({ fnCheck: function (key, value) {
+  if (key == 'not-a-date-key') {
+    return value;
+  }
+  return fallbackFnCheck(key, value);
+} });
+console.log(stringifyDate.parse({'not-a-date-key': '2020-01-01'}));
+console.log(stringifyDate.parse({'d': '20200101'}));
+```
+Output:
+
+```
+{ 'not-a-date-key': '2020-01-01' } // string
+{ d: 2020-01-01T00:00:00.000Z } // [object Date]
 ```
 
 ## Using with [ExpressJS](http://expressjs.com/)
