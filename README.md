@@ -101,16 +101,20 @@ _returns_: boolean
 Function to check whenever a string is a valid date
 ```javascript
 var stringifyDate = require('json-stringify-date');
+fallbackFnCheck = stringifyDate.getOptions().fnCheck;
 stringifyDate.setOptions({ fnCheck: function (key, value) {
-  return /\d{8}/.test(value);
+  if (key == 'not-a-date-key') {
+    return value;
+  }
+  return fallbackFnCheck(key, value);
 } });
-console.log(stringifyDate.parse({d: '2020-01-01'}));
-console.log(stringifyDate.parse({d: '20200101'}));
+console.log(stringifyDate.parse({'not-a-date-key': '2020-01-01'}));
+console.log(stringifyDate.parse({'d': '20200101'}));
 ```
 Output:
 
 ```
-{ d: '2020-01-01' } // string
+{ 'not-a-date-key': '2020-01-01' } // string
 { d: 2020-01-01T00:00:00.000Z } // [object Date]
 ```
 
