@@ -101,7 +101,7 @@ _returns_: boolean
 Function to check whenever a string is a valid date
 ```javascript
 var stringifyDate = require('json-stringify-date');
-fallbackFnCheck = stringifyDate.getOptions().fnCheck;
+var fallbackFnCheck = stringifyDate.getOptions().fnCheck;
 stringifyDate.setOptions({ fnCheck: function (key, value) {
   if (key == 'not-a-date-key') {
     return value;
