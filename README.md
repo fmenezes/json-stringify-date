@@ -163,6 +163,32 @@ app.post('/test', function (req, res) {
 app.listen(3000);
 ```
 
+## TypeScript Support
+
+This library includes TypeScript definitions. Here's how to use it with TypeScript:
+
+```typescript
+import * as stringifyDate from 'json-stringify-date';
+
+interface MyData {
+  timestamp: Date;
+  message: string;
+}
+
+// Stringify with preserved timezone
+const data: MyData = {
+  timestamp: new Date(),
+  message: "Hello world"
+};
+
+const json = stringifyDate.stringify(data);
+console.log(json);
+
+// Parse with automatic date conversion
+const parsedData = stringifyDate.parse(json) as MyData;
+console.log(parsedData.timestamp instanceof Date); // true
+```
+
 ## Using with Browser
 
 Add tag `<script type="text/javascript" src="https://raw.githubusercontent.com/fmenezes/json-stringify-date/master/browser.js"></script>`, you can also use webpack or any other packaging system.
@@ -178,6 +204,14 @@ Output:
 ```
 { d: Tue Mar 04 2014 00:00:00 GMT-0300 (BRT) }
 ```
+
+## Contributing
+
+We welcome contributions to improve this library! Please check out our [Contributing Guide](/CONTRIBUTING.md) for guidelines on how to proceed.
+
+## Security
+
+This project follows good security practices. If you discover a security vulnerability, please see our [Security Policy](/SECURITY.md) for the proper reporting procedure.
 
 ## Legal
 
