@@ -13,6 +13,11 @@ export default [
         ecmaVersion: 'latest',
         sourceType: 'module',
       },
+      globals: {
+        console: 'readonly',
+        process: 'readonly',
+        window: 'readonly'
+      }
     },
     plugins: {
       '@typescript-eslint': tseslint,
@@ -38,6 +43,17 @@ export default [
         jest: 'readonly'
       }
     },
+  },
+  // Browser script globals
+  {
+    files: ['**/*.js'],
+    languageOptions: {
+      globals: {
+        console: 'readonly',
+        process: 'readonly',
+        window: 'readonly',
+      }
+    }
   },
   {
     ignores: ['dist/**', 'node_modules/**', 'browser.js'],
