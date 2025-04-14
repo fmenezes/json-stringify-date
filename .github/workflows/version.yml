@@ -7,12 +7,15 @@ on:
         description: 'Version to increment (major, minor or patch)'
         required: true
         default: 'patch'
-
+permissions:
+  contents: write
 jobs:
-  npm:
+  version:
     runs-on: ubuntu-latest
     env:
       VERSION: ${{ github.event.inputs.version }}
+    outputs:
+      tag: ${{ steps.get-tag.outputs.TAG }}
     steps:
     - run: |
         if [[ "$VERSION" != "major" ]] && [[ "$VERSION" != "minor" ]] && [[ "$VERSION" != "patch" ]]; then
@@ -20,28 +23,26 @@ jobs:
           exit 1
         fi
     - run: |
-        git config --global user.name "${{ secrets.GIT_USER_NAME }}"
-        git config --global user.email "${{ secrets.GIT_USER_EMAIL }}"
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
     - uses: actions/setup-node@v4.2.0
       with:
         node-version-file: package.json
+        registry-url: "https://registry.npmjs.org"
     - run: npm ci
-    - run: npm version $VERSION
-    - name: NPM Publish
-      uses: JS-DevTools/npm-publish@v3
-      with:
-        token: ${{ secrets.NPM_TOKEN }}
-    - run: |
-        echo "TAG=$(npm run env | grep npm_package_version | cut -d '=' -f 2)" >> $GITHUB_ENV
+    - run: npm run check
+    - run: npm version $VERSION --no-git-tag-version
+    - id: get-tag
+      run: |
+        echo "TAG=$(jq -r '.version' < package.json)" >> $GITHUB_OUTPUT
     - name: Create Github Release
-      uses: actions/create-release@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: refs/tags/${{ env.TAG }}
-        release_name: Version ${{ env.TAG }}
-        body: Version ${{ env.TAG }}
-
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        gh release create "${{ steps.get-tag.outputs.TAG }}" --title "Version ${{ needs.version.outputs.TAG }}" --generate-notes --target "${{ github.ref }}"
+    - run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -16,7 +16,6 @@
     "@types/node": "^22.14.1",
     "@typescript-eslint/eslint-plugin": "^8.29.1",
     "@typescript-eslint/parser": "^8.29.1",
-    "auto-changelog": "^2.2.0",
     "babel-jest": "^29.7.0",
     "babelify": "^10.0.0",
     "browserify": "^17.0.1",
@@ -31,20 +30,15 @@
     "typescript": "^5.8.3"
   },
   "scripts": {
-    "preversion": "npm run check",
-    "postversion": "npm run changelog && npm run build && npm run retag && npm run push",
     "check:coverage": "jest --coverage",
     "test": "jest",
     "check:lint": "eslint . --ext .ts",
     "check:build": "./scripts/check.sh",
     "check": "npm run check:lint && npm run check:build && npm run check:coverage",
-    "changelog": "auto-changelog --ignore-commit-pattern FUNDING",
     "build:tsc": "tsc",
     "build:browser": "tsx ./scripts/build.ts",
     "build": "npm run build:tsc && npm run build:browser",
-    "prepare": "npm run build",
-    "retag": "export GIT_TAG=$(npm run env | grep npm_package_version | cut -d '=' -f 2) && git commit -a --amend --no-edit && git tag -f $GIT_TAG",
-    "push": "git push && git push --tag"
+    "prepare": "npm run build"
   },
   "repository": "git://github.com/fmenezes/json-stringify-date",
   "keywords": [
