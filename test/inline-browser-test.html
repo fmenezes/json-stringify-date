@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Stringify Date Browser Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <!-- Using full path to browser.js -->
+    <script src="file:///Users/filipe.menezes/Code/json-stringify-date/browser.js"></script>
+</head>
+<body>
+    <h1>JSON Stringify Date Browser Test</h1>
+    <div id="test-results"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Make sure JSONStringifyDate is accessible
+            console.log('JSONStringifyDate available:', window.JSONStringifyDate);
+            console.log('JSONStringifyDate available:', JSONStringifyDate);
+
+            // Run tests and display results on page
+            const results = runTests();
+            const resultsDiv = document.getElementById('test-results');
+            resultsDiv.innerHTML = '<pre>' + JSON.stringify(results, null, 2) + '</pre>';
+            
+            if (results.error) {
+                resultsDiv.style.color = 'red';
+            } else {
+                const allPass = Object.values(results).every(r => r.success !== false);
+                resultsDiv.style.color = allPass ? 'green' : 'red';
+            }
+        });
+
+        // This will be accessed by the Puppeteer tests
+        window.runTests = function () {
+            const results = {};
+            const JSONStringifyDate = window.JSONStringifyDate;
+
+            try {
+                console.log('Starting browser tests');
+                console.log('JSONStringifyDate:', typeof JSONStringifyDate);
+
+                if (typeof JSONStringifyDate !== 'object' || !JSONStringifyDate) {
+                    throw new Error('JSONStringifyDate is not defined or not an object');
+                }
+
+                // Test stringify with local date
+                const date = new Date();
+                const stringified = JSONStringifyDate.stringify({ date });
+                console.log('Stringify result:', stringified);
+                results.stringifyTest = {
+                    success: /^\{"date":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}[+-]\d{2}:\d{2}"\}$/.test(stringified) || 
+                                /^\{"date":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z"\}$/.test(stringified),
+                    value: stringified
+                };
+
+                // Test parse with date string
+                const dateStr = '{"date":"2023-01-01T12:00:00.000Z"}';
+                const parsed = JSONStringifyDate.parse(dateStr);
+                console.log('Parse result:', parsed);
+                results.parseTest = {
+                    success: parsed.date instanceof Date,
+                    value: parsed.date.toString()
+                };
+
+                // Test option setting
+                JSONStringifyDate.setOptions({ utc: true });
+                const utcStringified = JSONStringifyDate.stringify({ date });
+                console.log('UTC stringify result:', utcStringified);
+                results.utcTest = {
+                    success: /Z"\}$/.test(utcStringified),
+                    value: utcStringified
+                };
+
+                // Test custom reviver
+                const customReviver = JSONStringifyDate.fnReviver((key, value) => {
+                    if (value instanceof Date) {
+                        return 'Custom: ' + value.toISOString();
+                    }
+                    return value;
+                });
+                const customParsed = JSON.parse('{"date":"2023-01-01T12:00:00.000Z"}', customReviver);
+                console.log('Custom reviver result:', customParsed);
+                results.reviverTest = {
+                    success: typeof customParsed.date === 'string' && customParsed.date.startsWith('Custom:'),
+                    value: customParsed.date
+                };
+            } catch (err) {
+                console.error('Test error:', err);
+                results.error = err.message;
+                results.stack = err.stack;
+            }
+
+            return results;
+        };
+    </script>
+</body>
+</html>
