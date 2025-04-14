@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Stringify Date Browser Test</title>
+    <script>
+        // Parse URL parameters to get the script path
+        const urlParams = new URLSearchParams(window.location.search);
+        const scriptPath = urlParams.get('scriptPath');
+        
+        // Create and append the script element dynamically
+        if (scriptPath) {
+            console.log('Loading script from:', scriptPath);
+            const scriptElement = document.createElement('script');
+            scriptElement.src = scriptPath;
+            scriptElement.onerror = function() {
+                console.error('Failed to load script from path:', scriptPath);
+                document.getElementById('test-results').innerHTML = 
+                    '<p style="color: red;">ERROR: Failed to load script from ' + scriptPath + '</p>';
+            };
+            document.head.appendChild(scriptElement);
+        } else {
+            console.error('No script path provided in URL parameters');
+        }
+    </script>
+</head>
+<body>
+    <h1>JSON Stringify Date Browser Test</h1>
+    <div id="test-results"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Make sure JSONStringifyDate is accessible
+            console.log('JSONStringifyDate available:', window.JSONStringifyDate);
+            
+            // Only run tests if the library is loaded
+            if (typeof JSONStringifyDate === 'object' && JSONStringifyDate) {
+                // Run tests and display results on page
+                const results = runTests();
+                const resultsDiv = document.getElementById('test-results');
+                resultsDiv.innerHTML = '<pre>' + JSON.stringify(results, null, 2) + '</pre>';
+                
+                if (results.error) {
+                    resultsDiv.style.color = 'red';
+                } else {
+                    const allPass = Object.values(results).every(r => r.success !== false);
+                    resultsDiv.style.color = allPass ? 'green' : 'red';
+                }
+            } else {
+                console.error('JSONStringifyDate library not loaded properly');
+                document.getElementById('test-results').innerHTML = 
+                    '<p style="color: red;">ERROR: JSONStringifyDate library not loaded properly</p>';
+            }
+        });
+
+        // This will be accessed by the Puppeteer tests
+        window.runTests = function () {
+            const results = {};
+            const JSONStringifyDate = window.JSONStringifyDate;
+
+            try {
+                console.log('Starting browser tests');
+                console.log('JSONStringifyDate:', typeof JSONStringifyDate);
+
+                if (typeof JSONStringifyDate !== 'object' || !JSONStringifyDate) {
+                    throw new Error('JSONStringifyDate is not defined or not an object');
+                }
+
+                // Test stringify with local date
+                const date = new Date();
+                const stringified = JSONStringifyDate.stringify({ date });
+                console.log('Stringify result:', stringified);
+                results.stringifyTest = {
+                    success: /^\{"date":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}[+-]\d{2}:\d{2}"\}$/.test(stringified) || 
+                                /^\{"date":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z"\}$/.test(stringified),
+                    value: stringified
+                };
+
+                // Test parse with date string
+                const dateStr = '{"date":"2023-01-01T12:00:00.000Z"}';
+                const parsed = JSONStringifyDate.parse(dateStr);
+                console.log('Parse result:', parsed);
+                results.parseTest = {
+                    success: parsed.date instanceof Date,
+                    value: parsed.date.toString()
+                };
+
+                // Test option setting
+                JSONStringifyDate.setOptions({ utc: true });
+                const utcStringified = JSONStringifyDate.stringify({ date });
+                console.log('UTC stringify result:', utcStringified);
+                results.utcTest = {
+                    success: /Z"\}$/.test(utcStringified),
+                    value: utcStringified
+                };
+
+                // Test custom reviver
+                const customReviver = JSONStringifyDate.fnReviver((key, value) => {
+                    if (value instanceof Date) {
+                        return 'Custom: ' + value.toISOString();
+                    }
+                    return value;
+                });
+                const customParsed = JSON.parse('{"date":"2023-01-01T12:00:00.000Z"}', customReviver);
+                console.log('Custom reviver result:', customParsed);
+                results.reviverTest = {
+                    success: typeof customParsed.date === 'string' && customParsed.date.startsWith('Custom:'),
+                    value: customParsed.date
+                };
+            } catch (err) {
+                console.error('Test error:', err);
+                results.error = err.message;
+                results.stack = err.stack;
+            }
+
+            return results;
+        };
+    </script>
+</body>
+</html>

@@ -108,14 +108,39 @@ stringifyDate.setOptions({ fnCheck: function (key, value) {
   }
   return fallbackFnCheck(key, value);
 } });
-console.log(stringifyDate.parse({'not-a-date-key': '2020-01-01'}));
-console.log(stringifyDate.parse({'d': '20200101'}));
+console.log(stringifyDate.parse({'not-a-date-key': '2020-01-01','d': '20200101'}));
 ```
 Output:
 
 ```
-{ 'not-a-date-key': '2020-01-01' } // string
-{ d: 2020-01-01T00:00:00.000Z } // [object Date]
+{
+  'not-a-date-key': '2020-01-01',             // string
+  d               :  2020-01-01T00:00:00.000Z  // [object Date]
+}
+```
+
+#### fnReplacerCheck
+_type_: function (string, string)
+_returns_: boolean
+Function to check whenever a string is a valid date
+```javascript
+var stringifyDate = require('json-stringify-date');
+var fallbackFnCheck = stringifyDate.getOptions().fnReplacerCheck;
+stringifyDate.setOptions({ fnReplacerCheck: function (key, value) {
+  if (key == 'not-a-date-key') {
+    return value;
+  }
+  return fallbackFnCheck(key, value);
+} });
+console.log(stringifyDate.stringify({'not-a-date-key': new Date("2020-01-01T00:00:00"), 'd': new Date("2020-01-01T00:00:00")}));
+```
+Output:
+
+```
+{
+  'not-a-date-key': '2020-01-01',             // string
+  d               :  2020-01-01T00:00:00.000Z // [object Date]
+}
 ```
 
 ## Using with [ExpressJS](http://expressjs.com/)
