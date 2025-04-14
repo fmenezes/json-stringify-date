@@ -40,7 +40,8 @@ export default [
         afterAll: 'readonly',
         beforeEach: 'readonly',
         afterEach: 'readonly',
-        jest: 'readonly'
+        jest: 'readonly',
+        __dirname: 'readonly',
       }
     },
   },

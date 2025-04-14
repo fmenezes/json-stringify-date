@@ -23,7 +23,6 @@ browserify('./src/index.ts', {
             '@babel/preset-typescript',
         ],
     })
-    // .plugin(esmify)
     .bundle()
     .on('error', (err) => {
         console.error(err);
