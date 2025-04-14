@@ -16,4 +16,5 @@ export default {
         ],
     },
     moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
+    testPathIgnorePatterns: ["/node_modules/", "/dist/", "/test/browser.spec.js"] // Exclude browser test from Jest runs
 };
