@@ -4,9 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JSON Stringify Date Browser Test</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-    <!-- Using full path to browser.js -->
-    <script src="file:///Users/filipe.menezes/Code/json-stringify-date/browser.js"></script>
+    <script>
+        // Parse URL parameters to get the script path
+        const urlParams = new URLSearchParams(window.location.search);
+        const scriptPath = urlParams.get('scriptPath');
+        
+        // Create and append the script element dynamically
+        if (scriptPath) {
+            console.log('Loading script from:', scriptPath);
+            const scriptElement = document.createElement('script');
+            scriptElement.src = scriptPath;
+            scriptElement.onerror = function() {
+                console.error('Failed to load script from path:', scriptPath);
+                document.getElementById('test-results').innerHTML = 
+                    '<p style="color: red;">ERROR: Failed to load script from ' + scriptPath + '</p>';
+            };
+            document.head.appendChild(scriptElement);
+        } else {
+            console.error('No script path provided in URL parameters');
+        }
+    </script>
 </head>
 <body>
     <h1>JSON Stringify Date Browser Test</h1>
@@ -15,18 +32,24 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Make sure JSONStringifyDate is accessible
             console.log('JSONStringifyDate available:', window.JSONStringifyDate);
-            console.log('JSONStringifyDate available:', JSONStringifyDate);
-
-            // Run tests and display results on page
-            const results = runTests();
-            const resultsDiv = document.getElementById('test-results');
-            resultsDiv.innerHTML = '<pre>' + JSON.stringify(results, null, 2) + '</pre>';
             
-            if (results.error) {
-                resultsDiv.style.color = 'red';
+            // Only run tests if the library is loaded
+            if (typeof JSONStringifyDate === 'object' && JSONStringifyDate) {
+                // Run tests and display results on page
+                const results = runTests();
+                const resultsDiv = document.getElementById('test-results');
+                resultsDiv.innerHTML = '<pre>' + JSON.stringify(results, null, 2) + '</pre>';
+                
+                if (results.error) {
+                    resultsDiv.style.color = 'red';
+                } else {
+                    const allPass = Object.values(results).every(r => r.success !== false);
+                    resultsDiv.style.color = allPass ? 'green' : 'red';
+                }
             } else {
-                const allPass = Object.values(results).every(r => r.success !== false);
-                resultsDiv.style.color = allPass ? 'green' : 'red';
+                console.error('JSONStringifyDate library not loaded properly');
+                document.getElementById('test-results').innerHTML = 
+                    '<p style="color: red;">ERROR: JSONStringifyDate library not loaded properly</p>';
             }
         });
 

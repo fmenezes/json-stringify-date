@@ -7,16 +7,26 @@ import fs from 'fs';
 // Get current file directory (ESM equivalent of __dirname)
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const testPagePath = `file://${path.resolve(__dirname, 'inline-browser-test.html')}`;
+const projectRoot = path.resolve(__dirname, '..');
+const browserJsPath = path.resolve(projectRoot, 'browser.js');
+const browserJsPathEncoded = encodeURIComponent(`file://${browserJsPath}`);
+const testPagePath = `file://${path.resolve(__dirname, 'inline-browser-test.html')}?scriptPath=${browserJsPathEncoded}`;
 
 (async () => {
   console.log('Starting browser tests for json-stringify-date browser.js');
+  console.log('Browser JS path:', browserJsPath);
   console.log('Test page path:', testPagePath);
   
   try {
     // Check if the HTML test file exists
     if (!fs.existsSync(path.resolve(__dirname, 'inline-browser-test.html'))) {
       console.error('Test HTML file not found:', path.resolve(__dirname, 'inline-browser-test.html'));
+      process.exit(1);
+    }
+    
+    // Check if browser.js exists
+    if (!fs.existsSync(browserJsPath)) {
+      console.error('browser.js file not found:', browserJsPath);
       process.exit(1);
     }
     
