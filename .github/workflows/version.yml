@@ -22,9 +22,6 @@ jobs:
           echo "Input should be either 'major', 'minor' or 'patch'"
           exit 1
         fi
-    - run: |
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
@@ -34,15 +31,22 @@ jobs:
         registry-url: "https://registry.npmjs.org"
     - run: npm ci
     - run: npm run check
-    - run: npm version $VERSION --no-git-tag-version
+    - run: npm version "${{ github.event.inputs.version }}" --no-git-tag-version
     - id: get-tag
       run: |
         echo "TAG=$(jq -r '.version' < package.json)" >> $GITHUB_OUTPUT
+    - name: Commit Version Bump
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git add .
+        git commit -m "bump: version to ${{ steps.get-tag.outputs.TAG }}"
+        git push
     - name: Create Github Release
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
-        gh release create "${{ steps.get-tag.outputs.TAG }}" --title "Version ${{ needs.version.outputs.TAG }}" --generate-notes --target "${{ github.ref }}"
+        gh release create "${{ steps.get-tag.outputs.TAG }}" --title "Version ${{ steps.get-tag.outputs.TAG }}" --generate-notes --target "${{ github.ref }}"
     - run: npm publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
