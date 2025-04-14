@@ -38,7 +38,7 @@
     "test": "jest",
     "check:lint": "eslint . --ext .ts",
     "check:build": "./scripts/check.sh",
-    "check": "npm run check:build && npm run check:release && npm run check:coverage",
+    "check": "npm run check:lint && npm run check:build && npm run check:coverage",
     "changelog": "auto-changelog --ignore-commit-pattern FUNDING",
     "build:tsc": "tsc",
     "build:browser": "tsx ./scripts/build.ts",
